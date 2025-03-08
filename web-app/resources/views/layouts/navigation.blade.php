@@ -1,3 +1,4 @@
+
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -14,6 +15,16 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
+                    </x-nav-link>
+
+                    
+                    <!-- Show Upload Image only for Contributors -->
+                    <x-nav-link :href="route('images.index')" :active="request()->routeIs('images.index')">
+                        {{ __('Upload Image') }}
+                    </x-nav-link>
+                    <!-- Show View Images only for Admins -->
+                    <x-nav-link :href="route('admin.images')" :active="request()->routeIs('admin.images')">
+                        {{ __('View Images') }}
                     </x-nav-link>
                 </div>
             </div>
