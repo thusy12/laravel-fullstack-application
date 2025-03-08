@@ -17,15 +17,19 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    
-                    <!-- Show Upload Image only for Contributors -->
-                    <x-nav-link :href="route('images.index')" :active="request()->routeIs('images.index')">
-                        {{ __('Upload Image') }}
-                    </x-nav-link>
-                    <!-- Show View Images only for Admins -->
-                    <x-nav-link :href="route('admin.images')" :active="request()->routeIs('admin.images')">
-                        {{ __('View Images') }}
-                    </x-nav-link>
+                    @auth
+                        @if(auth()->user()->role->name === 'contributor')
+                            <x-nav-link :href="route('images.index')" :active="request()->routeIs('images.index')">
+                                {{ __('Upload Image') }}
+                            </x-nav-link>
+                        @endif
+
+                        @if(auth()->user()->role->name === 'admin')
+                            <x-nav-link :href="route('admin.images')" :active="request()->routeIs('admin.images')">
+                                {{ __('View Images') }}
+                            </x-nav-link>
+                        @endif
+                    @endauth
                 </div>
             </div>
 

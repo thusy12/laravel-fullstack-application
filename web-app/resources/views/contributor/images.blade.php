@@ -3,8 +3,9 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Image Upload') }}
         </h2>
+    </x-slot>
 
-        <div class="py-12">
+    <div class="py-12">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-8 col-md-10 col-sm-12">
@@ -48,7 +49,4 @@
                 </div>
             </div>
         </div>
-    </x-slot>
-
-    
 </x-app-layout>

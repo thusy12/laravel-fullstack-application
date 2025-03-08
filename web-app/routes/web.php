@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,13 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/needtodelete', function () {
-    return view('welcome');
-});
-
-Route::get('/', function () {
-    return redirect('/register');
-});
+Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
