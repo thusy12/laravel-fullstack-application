@@ -111,7 +111,7 @@
         // JavaScript to reset file input and cancel image selection
         document.getElementById('cancelButton').addEventListener('click', function() {
             // Reset the file input field
-            document.getElementById('imageInput').value = '';
+            document.getElementById('image').value = '';
         });
 
         document.getElementById('image').addEventListener('change', function(event) {
