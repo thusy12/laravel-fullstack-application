@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     @if (Auth::user()->hasVerifiedEmail())
-                        {{ __("You're logged in!") }}
+                        {{ __("Hi :name, You're successfully logged in!", ['name' => Auth::user()->name]) }}
                     @else
                         <div class="text-red-500">
                             {{ __("Please verify your email address to access the dashboard.") }}
