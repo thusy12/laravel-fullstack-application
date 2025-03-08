@@ -1,5 +1,12 @@
 <section>
     <header>
+        <div x-data="{ show: true }">
+            @if(session('status') === 'profile-updated')
+                <div x-show="show" class="alert alert-success" x-init="setTimeout(() => show = false, 10000)">
+                    {{ __('Profile Updated.') }}
+                </div>
+            @endif
+        </div>
         <h2 class="text-lg font-medium text-gray-900">
             {{ __('Profile Information') }}
         </h2>
@@ -49,16 +56,6 @@
 
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
-
-            @if (session('status') === 'profile-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600"
-                >{{ __('Saved.') }}</p>
-            @endif
         </div>
     </form>
 </section>
