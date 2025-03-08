@@ -51,6 +51,11 @@
                                     @endforeach
                                 </tbody>
                             </table>
+
+                            <!-- Pagination -->
+                            <div class="pagination-wrapper">
+                                {{ $images->links() }} <!-- Display pagination links -->
+                            </div>
                         </div>
                     @endif
                 </div>
@@ -67,5 +72,4 @@
             }
         }, 10000); // 10 seconds
     </script>
-
 </x-app-layout>

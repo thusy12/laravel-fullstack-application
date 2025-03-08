@@ -27,7 +27,7 @@
                                 <div class="form-group row align-items-center">
                                     <label for="image" class="col-sm-2 col-form-label font-weight-bold">Choose an image</label>
                                     <div class="col-sm-6">
-                                        <input type="file" name="image" class="form-control-file d-inline-block" id="imageInput" required>
+                                        <input type="file" name="image" class="form-control-file d-inline-block" id="image" required>
                                     </div>
                                     <div class="col-sm-4 text-right">
                                         <!-- Upload Button -->
@@ -38,28 +38,44 @@
                                 </div>
                             </form>
 
-                            <hr>
-
-                            <h4 class="mt-4">Your Uploaded Images</h4>
-                            @if($images->isEmpty())
-                                <p>No images uploaded yet.</p>
-                            @else
-                                @foreach($images as $image)
-                                    <div class="row my-3">
-                                        <div class="col-md-4 mb-3">
-                                            <img src="{{ asset('storage/' . $image->file_path) }}" class="img-fluid rounded" alt="Uploaded Image">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <p><strong>Status:</strong> <span class="badge 
-                                                @if($image->status == 'approved') badge-success
-                                                @elseif($image->status == 'denied') badge-danger
-                                                @else badge-warning @endif">
-                                                {{ ucfirst($image->status) }}
-                                            </span></p>
-                                        </div>
+                            <div class="card-header bg-dark text-white">
+                                <h3 class="m-0">Your Uploaded Images</h3>
+                            </div>
+                            <div class="card-body">
+                                @if($images->isEmpty())
+                                    <p>No images uploaded yet.</p>
+                                @else
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Image</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($images as $image)
+                                                    <tr>
+                                                        <td>
+                                                            <img src="{{ asset('storage/' . $image->file_path) }}" class="img-fluid rounded" alt="Uploaded Image" width="150">
+                                                        </td>
+                                                        <td>
+                                                            <span class="badge 
+                                                                @if($image->status == 'approved') badge-success
+                                                                @elseif($image->status == 'denied') badge-danger
+                                                                @else badge-warning @endif">
+                                                                {{ ucfirst($image->status) }}
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        <!-- Pagination Links -->
+                                        {{ $images->links() }}
                                     </div>
-                                @endforeach
-                            @endif
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -80,6 +96,18 @@
         document.getElementById('cancelButton').addEventListener('click', function() {
             // Reset the file input field
             document.getElementById('imageInput').value = '';
+        });
+
+        document.getElementById('image').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const fileType = file ? file.type : '';
+
+            // Check if the file is an image
+            if (!fileType.startsWith('image/')) {
+                alert('Only image files are allowed!');
+                // Clear the selected file
+                event.target.value = '';
+            }
         });
     </script>
 </x-app-layout>
