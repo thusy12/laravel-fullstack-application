@@ -20,9 +20,18 @@ class AdminController extends Controller
     {
         $image->update(['status' => $status]);
 
-        // Send email notification
-        Mail::to($image->user->email)->send(new ImageApprovalMail($image));
-
-        return back()->with('success', 'Image status updated!');
+        try {
+            // Send email notification
+            Mail::to($image->user->email)->send(new ImageApprovalMail($image));
+        } catch (\Exception $e) {
+            return back()->with('warning', 'Image status updated, but email notification failed.');
+        }
+    
+        // Return message to be displayed on the frontend
+        if ($status == 'approved') {
+            return back()->with('success', 'Image approved!');
+        } else {
+            return back()->with('success', 'Image denied!');
+        }
     }
 }

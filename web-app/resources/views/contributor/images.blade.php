@@ -6,47 +6,80 @@
     </x-slot>
 
     <div class="py-12">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8 col-md-10 col-sm-12">
-                        <div class="card shadow-sm">
-                            <div class="card-header">
-                                <h3>Upload Image</h3>
-                            </div>
-                            <div class="card-body">
-                                @if(session('success'))
-                                    <div class="alert alert-success">
-                                        {{ session('success') }}
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <!-- Success Message -->
+            @if(session('success'))
+                <div id="status-message" class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-dark text-white">
+                            <h3 class="m-0">Upload Image</h3>
+                        </div>
+                        <div class="card-body">
+                            <!-- Image Upload Form -->
+                            <form action="{{ route('images.upload') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="form-group row align-items-center">
+                                    <label for="image" class="col-sm-2 col-form-label font-weight-bold">Choose an image</label>
+                                    <div class="col-sm-6">
+                                        <input type="file" name="image" class="form-control-file d-inline-block" id="imageInput" required>
                                     </div>
-                                @endif
-
-                                <!-- Image Upload Form -->
-                                <form action="{{ route('images.upload') }}" method="POST" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="form-group">
-                                        <label for="image">Choose an image</label>
-                                        <input type="file" name="image" class="form-control" required>
+                                    <div class="col-sm-4 text-right">
+                                        <!-- Upload Button -->
+                                        <button type="submit" class="btn btn-primary">Upload</button>
+                                        <!-- Cancel Button with Darker Grey Color -->
+                                        <button type="button" id="cancelButton" class="btn btn-secondary ml-2">Cancel</button>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Upload</button>
-                                </form>
+                                </div>
+                            </form>
 
-                                <hr>
+                            <hr>
 
-                                <h4>Your Uploaded Images</h4>
+                            <h4 class="mt-4">Your Uploaded Images</h4>
+                            @if($images->isEmpty())
+                                <p>No images uploaded yet.</p>
+                            @else
                                 @foreach($images as $image)
                                     <div class="row my-3">
-                                        <div class="col-md-4">
-                                            <img src="{{ asset('storage/' . $image->file_path) }}" class="img-fluid" alt="Uploaded Image">
+                                        <div class="col-md-4 mb-3">
+                                            <img src="{{ asset('storage/' . $image->file_path) }}" class="img-fluid rounded" alt="Uploaded Image">
                                         </div>
                                         <div class="col-md-8">
-                                            <p><strong>Status:</strong> {{ $image->status }}</p>
+                                            <p><strong>Status:</strong> <span class="badge 
+                                                @if($image->status == 'approved') badge-success
+                                                @elseif($image->status == 'denied') badge-danger
+                                                @else badge-warning @endif">
+                                                {{ ucfirst($image->status) }}
+                                            </span></p>
                                         </div>
                                     </div>
                                 @endforeach
-                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- JavaScript to Hide Message After 10 Seconds -->
+    <script>
+        setTimeout(function() {
+            let message = document.getElementById('status-message');
+            if (message) {
+                message.style.display = 'none';
+            }
+        }, 10000); // 10 seconds
+
+        // JavaScript to reset file input and cancel image selection
+        document.getElementById('cancelButton').addEventListener('click', function() {
+            // Reset the file input field
+            document.getElementById('imageInput').value = '';
+        });
+    </script>
 </x-app-layout>
