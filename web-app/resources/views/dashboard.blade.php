@@ -9,7 +9,21 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
+                    @if (Auth::user()->hasVerifiedEmail())
+                        {{ __("You're logged in!") }}
+                    @else
+                        <div class="text-red-500">
+                            {{ __("Please verify your email address to access the dashboard.") }}
+                        </div>
+                        <div class="mt-4">
+                            <form method="POST" action="{{ route('verification.send') }}">
+                                @csrf
+                                <x-primary-button>
+                                    {{ __('Resend Verification Email') }}
+                                </x-primary-button>
+                            </form>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
