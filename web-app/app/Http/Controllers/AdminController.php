@@ -12,7 +12,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $images = Image::where('status', 'pending')->latest()->paginate(5);
+        $images = Image::where('status', 'pending')->latest()->paginate(6);
         return view('admin.images', compact('images'));
     }
 

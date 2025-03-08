@@ -28,7 +28,7 @@ class ImageController extends Controller
 
     public function index()
     {
-        $images = auth()->user()->images()->orderBy('created_at', 'desc')->paginate(10);
+        $images = auth()->user()->images()->orderBy('created_at', 'desc')->paginate(12);
         return view('contributor.images', compact('images'));
     }
 

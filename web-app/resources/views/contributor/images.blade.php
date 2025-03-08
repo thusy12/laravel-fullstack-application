@@ -38,44 +38,42 @@
                                 </div>
                             </form>
 
-                            <div class="card-header bg-dark text-white">
-                                <h3 class="m-0">Your Uploaded Images</h3>
-                            </div>
-                            <div class="card-body">
+                            <div class="container py-5">
+                                <div class="card-header bg-dark text-white">
+                                    <h3 class="m-0">Your Uploaded Images</h3>
+                                </div>
                                 @if($images->isEmpty())
                                     <p>No images uploaded yet.</p>
                                 @else
-                                    <div class="table-responsive">
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Image</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach($images as $image)
-                                                    <tr>
-                                                        <td>
-                                                            <img src="{{ asset('storage/' . $image->file_path) }}" class="img-fluid rounded" alt="Uploaded Image" width="150">
-                                                        </td>
-                                                        <td>
+                                    <!-- Grid View for Images -->
+                                    <div class="row">
+                                        @foreach($images as $image)
+                                            <div class="col-md-3 mb-3">
+                                                <div class="card">
+                                                    <img src="{{ asset('storage/' . $image->file_path) }}" class="card-img-top img-thumbnail" alt="Uploaded Image" style="height: 150px; object-fit: cover;">
+                                                    <div class="card-body">
+                                                        <p><strong>Status:</strong> 
                                                             <span class="badge 
-                                                                @if($image->status == 'approved') badge-success
-                                                                @elseif($image->status == 'denied') badge-danger
-                                                                @else badge-warning @endif">
+                                                                @if($image->status == 'approved') badge-success 
+                                                                @elseif($image->status == 'denied') badge-danger 
+                                                                @else badge-warning 
+                                                                @endif">
                                                                 {{ ucfirst($image->status) }}
                                                             </span>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                        <!-- Pagination Links -->
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+
+                                    <!-- Pagination Links -->
+                                    <div class="d-flex justify-content-center mt-4">
                                         {{ $images->links() }}
                                     </div>
                                 @endif
                             </div>
+
                         </div>
                     </div>
                 </div>

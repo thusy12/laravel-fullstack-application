@@ -20,42 +20,43 @@
                     @if($images->isEmpty())
                         {{ __("No pending images!") }}
                     @else
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th>Image</th>
-                                        <th>Uploader</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($images as $image)
-                                        <tr>
-                                            <td>
-                                                <img src="{{ asset('storage/' . $image->file_path) }}" class="img-thumbnail" width="100">
-                                            </td>
-                                            <td>{{ $image->user->name }}</td>
-                                            <td>
-                                                <form action="{{ url('/admin/images/' . $image->id . '/approved') }}" method="POST" class="d-inline">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-success btn-sm">Approve</button>
-                                                </form>
+                        <!-- Grid View for Images -->
+                        <div class="row row-cols-1 row-cols-md-3 g-4">
+                            @foreach($images as $image)
+                                <div class="col mb-4"> <!-- Add margin-bottom to each column -->
+                                    <div class="card shadow-sm">
+                                        <img src="{{ asset('storage/' . $image->file_path) }}" class="card-img-top img-fluid" alt="Uploaded Image" style="height: 200px; object-fit: cover;">
+                                        <div class="card-body">
+                                            <h5 class="card-title"><strong>Uploaded By:</strong>{{ $image->user->name }}</h5>
+                                            <p class="card-text">
+                                                <strong>Status:</strong>
+                                                <span class="badge 
+                                                    @if($image->status == 'approved') badge-success 
+                                                    @elseif($image->status == 'denied') badge-danger 
+                                                    @else badge-warning @endif">
+                                                    {{ ucfirst($image->status) }}
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="card-footer text-center">
+                                            <form action="{{ url('/admin/images/' . $image->id . '/approved') }}" method="POST" class="d-inline">
+                                                @csrf
+                                                <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                            </form>
 
-                                                <form action="{{ url('/admin/images/' . $image->id . '/denied') }}" method="POST" class="d-inline">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-danger btn-sm">Deny</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                            <form action="{{ url('/admin/images/' . $image->id . '/denied') }}" method="POST" class="d-inline">
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger btn-sm">Deny</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
 
-                            <!-- Pagination -->
-                            <div class="pagination-wrapper">
-                                {{ $images->links() }} <!-- Display pagination links -->
-                            </div>
+                        <!-- Pagination Links -->
+                        <div class="d-flex justify-content-center mt-4">
+                            {{ $images->links() }}
                         </div>
                     @endif
                 </div>
