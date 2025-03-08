@@ -50,7 +50,10 @@
                                         @foreach($images as $image)
                                             <div class="col-md-3 mb-3">
                                                 <div class="card">
-                                                    <img src="{{ asset('storage/' . $image->file_path) }}" class="card-img-top img-thumbnail" alt="Uploaded Image" style="height: 150px; object-fit: cover;">
+                                                    <!-- Clickable Image for Viewing -->
+                                                    <a href="#" data-toggle="modal" data-target="#imageModal{{ $image->id }}">
+                                                        <img src="{{ asset('storage/' . $image->file_path) }}" class="card-img-top img-thumbnail" alt="Uploaded Image" style="height: 150px; object-fit: cover;">
+                                                    </a>
                                                     <div class="card-body">
                                                         <p><strong>Status:</strong> 
                                                             <span class="badge 
@@ -64,6 +67,21 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <!-- Fullscreen Modal for Image View -->
+                                            <div class="modal fade modal-fullscreen" id="imageModal{{ $image->id }}" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel{{ $image->id }}" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered modal-fullscreen" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-body text-center p-0">
+                                                            <img src="{{ asset('storage/' . $image->file_path) }}" class="img-fluid d-block mx-auto" alt="Full Image">
+                                                            <button type="button" class="close-fullscreen" data-dismiss="modal" aria-label="Close">
+                                                                &times;
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         @endforeach
                                     </div>
 
@@ -108,4 +126,49 @@
             }
         });
     </script>
+
+    <!-- Styles for Fullscreen Modal -->
+    <style>
+        /* Modal adjustments for full-screen image view */
+        .modal-fullscreen {
+            max-width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            max-width: none;
+        }
+
+        /* Ensures the modal body takes the full screen */
+        .modal-body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.9); /* Dark background */
+            height: 100vh; /* Full screen height */
+            padding: 0;
+        }
+
+        /* The image takes up as much space as possible */
+        .modal-body img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* Ensures the image maintains aspect ratio */
+        }
+
+        /* Close button styled to the top right */
+        .close-fullscreen {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 40px;
+            color: white;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .close-fullscreen:hover {
+            color: red;
+        }
+    </style>
 </x-app-layout>
