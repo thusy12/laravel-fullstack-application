@@ -1,66 +1,147 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel 10 Full-Stack Application
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 📌 Prerequisites
 
-## About Laravel
+Ensure you have the following installed on your system:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Laravel 10**
+- **PHP 8.1**
+- **MySQL Server**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🚀 Project Setup
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1️⃣ Clone the Repository
 
-## Learning Laravel
+Run the following command to clone the repository:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```sh
+git clone https://github.com/thusy12/laravel-fullstack-application.git
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 2️⃣ Navigate to Project Directory
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```sh
+cd web-app
+```
 
-## Laravel Sponsors
+### 3️⃣ Configure Environment Variables
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Copy the `.env.example` file to `.env` and update the following details:
 
-### Premium Partners
+#### Database Configuration
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database_name
+DB_USERNAME=your_database_username
+DB_PASSWORD=your_database_password
+```
 
-## Contributing
+#### Mail Configuration (For Email Notifications)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Create an account on [Mailtrap](https://mailtrap.io/) and update your `.env` file:
 
-## Code of Conduct
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=sandbox.smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=your_mailtrap_username
+MAIL_PASSWORD=your_mailtrap_password
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS=any_mail_address_as_your_wish
+MAIL_FROM_NAME="${APP_NAME}"
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 4️⃣ Install Dependencies
 
-## Security Vulnerabilities
+Run the following command to install PHP dependencies:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```sh
+composer install
+```
 
-## License
+### 5️⃣ Generate Application Key
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```sh
+php artisan key:generate
+```
+
+### 6️⃣ Install Frontend Dependencies
+
+```sh
+npm install
+npm run dev
+```
+
+### 7️⃣ Optimize Application
+
+```sh
+php artisan optimize
+```
+
+### 8️⃣ Start Development Server
+
+```sh
+php artisan serve
+```
+
+### 9️⃣ Run Database Migrations
+
+```sh
+php artisan migrate
+```
+
+### 🔟 Seed Database with Default Roles
+
+```sh
+php artisan db:seed --class=RolesSeeder
+```
+
+---
+
+✅ Your Laravel application is now set up and ready to use! 🎉
+
+## 🔐 User Roles
+
+- **Admin**: Registration must be manually added to the database. But Admins can log in with their registered credentials.
+- **Contributor**: Can register and log in via the provided forms.
+
+## 📂 Database Tables
+
+- **Users**: Stores user details.
+- **Roles**: Stores role details (Admin, Contributor).
+- **Images**: Stores uploaded images and their approval status.
+
+## 🔑 Authentication & Authorization
+
+The application uses Laravel’s built-in authentication (Breeze) with role-based authorization:
+
+- **Admin**: Can view, approve, and deny uploaded images.
+- **Contributor**: Can upload images.
+
+## 🎯 Features
+
+### Contributor Functionalities
+
+- Register/Login as a Contributor.
+- Account activation after verifying email.
+- Upload images.
+- View uploaded images with their approval status.
+
+### Admin Functionalities
+
+- Login as Admin.
+- View all submitted images from Contributors.
+- Approve or deny an image submission.
+- Send email notifications to the contributor when an image is approved or denied.
+
+## 🛠️ Technologies Used
+
+- **PHP**
+- **Laravel**
+- **MySQL**
+- **JavaScript**
+- **HTML & CSS**
+- **Bootstrap**
