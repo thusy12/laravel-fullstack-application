@@ -14,6 +14,12 @@
                 </div>
             @endif
 
+            @if(session('error'))
+                <div id="status-message" class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="card shadow-sm">
@@ -64,6 +70,13 @@
                                                                 {{ ucfirst($image->status) }}
                                                             </span>
                                                         </p>
+
+                                                        <!-- Delete Button -->
+                                                        <form action="{{ route('image.delete', $image->id) }}" method="POST" class="mt-2">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this image?')">Delete</button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>

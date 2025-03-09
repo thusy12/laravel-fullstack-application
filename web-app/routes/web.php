@@ -41,6 +41,7 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/images', [ImageController::class, 'index'])->name('images.index');
     Route::post('/images', [ImageController::class, 'store'])->name('images.upload');
+    Route::delete('/images/{id}', [ImageController::class, 'destroy'])->name('image.delete');
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {

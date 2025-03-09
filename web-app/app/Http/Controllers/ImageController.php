@@ -32,4 +32,11 @@ class ImageController extends Controller
         return view('contributor.images', compact('images'));
     }
 
+    public function destroy($id)
+    {
+        $image = Image::findOrFail($id);
+        $image->delete(); // Soft delete
+        return back()->with('error', 'Image deleted successfully.');
+    }
+
 }
