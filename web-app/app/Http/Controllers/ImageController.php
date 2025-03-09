@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Image;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,16 +17,24 @@ class ImageController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        $imageFile = $request->file('image');
         $timestamp = now()->format('Y_m_d_His');  // Format: Year_Month_Day_HourMinuteSecond
-        $extension = $request->file('image')->getClientOriginalExtension();  // Get the file extension
+        $extension = $imageFile->getClientOriginalExtension();  // Get the file extension
         $fileName = "image_{$timestamp}.{$extension}";  // Combine to create a unique name
 
-        // Store the image in the 'images' folder in public storage
-        $path = $request->file('image')->storeAs('images', $fileName, 'public');
+        $manager = new ImageManager(new Driver());
 
-        auth()->user()->images()->create(['file_path' => $path]);
+        // Resize Image
+        $image = $manager->read($imageFile)->resize(800, 600); // Resize to 800x600
+        $imagePath = "images/{$fileName}";
 
-        return back()->with('success', 'Image uploaded successfully!');
+        // Save to Storage
+        Storage::disk('public')->put($imagePath, $image->encode());
+
+        // Save Image Path to Database
+        auth()->user()->images()->create(['file_path' => $imagePath]);
+
+        return back()->with('success', 'Image resized and uploaded successfully!');
     }
 
     public function index()
