@@ -128,6 +128,8 @@ The application uses Laravel’s built-in authentication (Breeze) with role-base
 - Register/Login as a Contributor.
 - Account activation after verifying email.
 - Upload images.
+- Image resizing before storing.
+- SoftDeletes to images.
 - View uploaded images with their approval status.
 
 ### Admin Functionalities
